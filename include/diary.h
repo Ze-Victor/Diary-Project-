@@ -3,13 +3,20 @@
 
 #include "message.h"
 
-struct Diary{
+#include <string>
+#include <iostream>
 
-	int action;
+struct Diary
+{
+    Diary(const std::string& filename);
 
-	Message add_message(const message& content_formated);
-	Message list_messages();
+    std::string filename;
+    Message* messages;
+    size_t messages_size;
+    size_t messages_capacity;
 
+    void add(const std::string& message);
+    void write();
 };
 
 #endif
