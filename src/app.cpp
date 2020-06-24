@@ -1,28 +1,35 @@
 #include "../include/app.h"
 
+#include <iostream>
+#include <string>
+
 App::App(const std::string& filename) : diary(filename)
 {
 }
+
 int App::run(int argc, char* argv[])
 {
-    if(argc == 1){
+    if (argc == 1) {
         return show_usage();
     }
+    for (int i = 0; i < 10; ++i){
+        add();
+    }
+    list_messages();
 
     std::string action = argv[1];
 
-    if(action == "add"){
-        if(argc == 2){
-            add();
-        } 
-        else{
+    if (action == "add") {
+        if (argc == 2) {
+
+         add();
+        } else {
             add(argv[2]);
         }
-    }
-    else if(action == "list"){
+    } else if (action == "list") {
         list_messages();
-    }
-    else {
+    } else if (action == "search") {
+    } else {
         return show_usage();
     }
 
@@ -38,20 +45,21 @@ void App::add()
     add(message);
 }
 
-void App::add(const ::std::string message)
+void App::add(const std::string message)
 {
     diary.add(message);
     diary.write();
 }
 
-void App::list_messages(){
-    for (size_t i = 0; i < diary.messages_size; ++i){
+void App::list_messages()
+{
+    for (size_t i = 0; i < diary.messages_size; ++i) {
         const Message& message = diary.messages[i];
-        std::cout << "-" <<  message.content << std::endl;
+        std::cout << "-" << message.content << std::endl;
     }
 }
 
-int App::show_usage()
-{
+int App::show_usage() {
+    std::cerr << "Bad Use" << std::endl;
     return 1;
 }
