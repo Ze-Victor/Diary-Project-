@@ -49,8 +49,7 @@ void App::add(const std::string message)
 
 void App::list_messages()
 {
-    std::cout << diary.messages_size << std::endl;
-    for (size_t i = 0; i < 10; ++i) {
+    for (size_t i = 0; i < diary.messages_size; ++i) {
         const Message& message = diary.messages[i];
         std::cout << "-" << message.content << std::endl;
     }

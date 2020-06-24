@@ -9,9 +9,7 @@ messages_capacity(10), messages_size(0)
 
 void Diary::add(const std::string& message)
 {
-    std::string m;
-    m = message;
-    messages[messages_size].content = m;
+    messages[messages_size].content = message;
     messages_size++;
     std::cout << "Mensagem adicionada. " << std::endl;
 
