@@ -1,5 +1,4 @@
 #include "../include/diary.h"
-#include "../include/utilities.h"
 
 Diary::Diary(const std::string& filename) : filename(filename), messages(nullptr), 
 messages_capacity(10), messages_size(0)
