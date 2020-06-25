@@ -2,6 +2,9 @@
 #define DIARY_H
 
 #include "message.h"
+#include "utilities.h"
+#include "date.h"
+#include "time.h"
 
 #include <string>
 #include <iostream>
@@ -9,6 +12,7 @@
 struct Diary
 {
     Diary(const std::string& filename);
+    ~Diary();
 
     std::string filename;
     Message* messages;

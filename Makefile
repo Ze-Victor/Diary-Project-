@@ -1,7 +1,7 @@
 PROG = diary
 CC = g++
 CPPFLAGS = -O0 -std=c++11 -g 
-OBJS = main.o message.o date.o time.o diary.o app.o
+OBJS = main.o message.o date.o time.o diary.o app.o utilities.o
 
 $(PROG) : $(OBJS)
 	$(CC)  $(OBJS)  -o $(PROG)
@@ -23,6 +23,9 @@ diary.o :  include/diary.h
 
 app.o :  include/app.h
 	$(CC) $(CPPFLAGS) -c src/app.cpp
+
+utilities.o :  include/utilities.h
+	$(CC) $(CPPFLAGS) -c src/utilities.cpp
 
 clean:
 	rm -f *.o
