@@ -7,6 +7,9 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <cstring>
 
 struct Diary
 {
@@ -19,7 +22,7 @@ struct Diary
     size_t messages_capacity;
 
     void add(const std::string& message);
-    void write();
+    void write(std::string message);
 };
 
 #endif

@@ -1,10 +1,9 @@
 PROG = diary
 CC = g++
 CPPFLAGS = -O0 -std=c++11 -g 
-OBJS = main.o message.o date.o time.o diary.o app.o utilities.o
 
-$(PROG) : $(OBJS)
-	$(CC)  $(OBJS)  -o $(PROG)
+$(PROG) : main.o message.o date.o time.o diary.o app.o utilities.o
+	$(CC)  main.o message.o date.o time.o diary.o app.o utilities.o  -o $(PROG)
 
 main.o :
 	$(CC) $(CPPFLAGS) -c src/main.cpp

@@ -13,6 +13,7 @@ struct Date
     unsigned day;
 
     void set_from_string(const std::string& date);
+    std::string to_string();
 
 };
 

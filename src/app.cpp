@@ -20,7 +20,8 @@ int App::run(int argc, char* argv[])
 
          add();
         } else {
-            add(argv[2]);
+            std::string message = argv[2];
+            add(message);
         }
     } else if (action == "list") {
         list_messages();
@@ -44,7 +45,7 @@ void App::add()
 void App::add(const std::string message)
 {
     diary.add(message);
-    diary.write();
+    //diary.write();
 }
 
 void App::list_messages()
