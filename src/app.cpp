@@ -26,6 +26,8 @@ int App::run(int argc, char* argv[])
     } else if (action == "list") {
         list_messages();
     } else if (action == "search") {
+        std::string message = argv[2];
+        search_messege(message);
     } else {
         return show_usage();
     }
@@ -59,4 +61,12 @@ void App::list_messages()
 int App::show_usage() {
     std::cerr << "Bad Use" << std::endl;
     return 1;
+}
+void App::search_messege(std::string message){
+    Message *what = diary.search(message);
+    if(what == nullptr){
+        std::cout << "Nenhuma mensagem com a palavra " << message << " encontrada" << std::endl;
+    }else{
+        std::cout << what->content << std::endl;
+    }
 }

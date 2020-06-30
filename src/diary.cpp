@@ -117,3 +117,14 @@ void Diary::write(std::string message)
 
     file_out.close();
 }
+Message* Diary::search(std::string what){
+    std::size_t found;
+    for (int i = 0; i < messages_size; ++i)
+    {
+        found = messages[i].content.find(what);
+        if (found!=std::string::npos){
+            return &messages[i];
+        }
+    }
+    return nullptr;
+}

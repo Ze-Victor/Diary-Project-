@@ -23,6 +23,7 @@ struct Diary
 
     void add(const std::string& message);
     void write(std::string message);
+    Message* search(std::string what);
 };
 
 #endif
