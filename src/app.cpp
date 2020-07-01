@@ -52,7 +52,7 @@ void App::add(const std::string message)
 
 void App::list_messages()
 {
-    for (size_t i = 0; i < diary.messages_size; ++i) {
+    for (size_t i = 0; i < diary.messages.size(); ++i) {
         const Message& message = diary.messages[i];
         std::cout << "-" << message.content << std::endl;
     }
@@ -63,10 +63,11 @@ int App::show_usage() {
     return 1;
 }
 void App::search_messege(std::string message){
-    Message *what = diary.search(message);
-    if(what == nullptr){
-        std::cout << "Nenhuma mensagem com a palavra " << message << " encontrada" << std::endl;
-    }else{
-        std::cout << what->content << std::endl;
+
+    std::vector<Message*> what = diary.search(message);
+
+    for (auto i : what)
+    {
+        std::cout << i->content << std::endl;
     }
 }

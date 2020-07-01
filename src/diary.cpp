@@ -1,15 +1,13 @@
 #include "../include/diary.h"
 
-Diary::Diary(const std::string& name) : filename(name), messages(nullptr), 
-messages_capacity(10), messages_size(0)
+Diary::Diary(const std::string& name) : filename(name)
 {
-    messages_size = 0;
-	messages = new Message[messages_capacity];
     std::ifstream file_in(filename);
     if(file_in.is_open()){
         std::string aux;
         char discard;
         getline(file_in, aux);
+        Message m;
 
         while(!file_in.eof() && aux.size() != 0){
 
@@ -19,56 +17,45 @@ messages_capacity(10), messages_size(0)
             aux = discard;
 
             if(aux == "#"){
-                stream >> messages[messages_size].date.day;
+                stream >> m.date.day;
                 stream >> discard;
-                stream >> messages[messages_size].date.month;
+                stream >> m.date.month;
                 stream >> discard;
-                stream >> messages[messages_size].date.year;
+                stream >> m.date.year;
                 getline(file_in, aux);
                 std::stringstream stream (aux);
                 stream >> discard;
                 aux = discard;
                 if(aux == "-"){
-                    stream >> messages[messages_size].time.hour;
+                    stream >> m.time.hour;
                     stream >> discard;
-                    stream >> messages[messages_size].time.minute;
+                    stream >> m.time.minute;
                     stream >> discard;
-                    stream >> messages[messages_size].time.second;
+                    stream >> m.time.second;
                     stream >> discard;
-                    getline(stream, messages[messages_size].content);
+                    getline(stream, m.content);
                 }
-                messages_size++;
+                messages.push_back(m);
 
             }else if(aux == "-"){
-                stream >> messages[messages_size].time.hour;
+                stream >> m.time.hour;
                 stream >> discard;
-                stream >> messages[messages_size].time.minute;
+                stream >> m.time.minute;
                 stream >> discard;
-                stream >> messages[messages_size].time.second;
+                stream >> m.time.second;
                 stream >> discard;
-                getline(stream, messages[messages_size].content);
-                messages[messages_size].date.day = messages[messages_size-1].date.day;
-                messages[messages_size].date.month = messages[messages_size-1].date.month;
-                messages[messages_size].date.year = messages[messages_size-1].date.year;
-                messages_size++;
+                getline(stream, m.content);
+                m.date.day = messages[(messages.size())-1].date.day;
+                m.date.month = messages[(messages.size())-1].date.month;
+                m.date.year = messages[(messages.size())-1].date.year;
+                messages.push_back(m);
             }
-            if(messages_size == messages_capacity){
-                    messages_capacity *=2;
-                    Message* new_messages = new Message[messages_capacity];
-                    for(int i = 0;i<(messages_capacity/2); i++){
-                    new_messages[i] = messages[i];
-                }
-                delete[] messages;
-                messages = new_messages;
-            }
+
             getline(file_in, aux);
         }
     }
 
     file_in.close();
-}
-Diary::~Diary(){
-    delete[] messages;
 }
 void Diary::add(const std::string& message)
 {
@@ -79,22 +66,10 @@ void Diary::add(const std::string& message)
     m.date.set_from_string(get_date());
     m.time.set_from_string(get_time());
 
-    messages[messages_size] = m;
-    aux_Saida = "- " + messages[messages_size].time.to_string()
-                + ": " + messages[messages_size].content + "\n";
+    messages.push_back(m);
+    aux_Saida = "- " + messages[(messages.size())-1].time.to_string()
+                + ": " + messages[(messages.size())-1].content + "\n";
     write(aux_Saida);
-    messages_size++;
-
-    if(messages_size == messages_capacity){
-        messages_capacity *=2;
-        Message* new_messages = new Message[messages_capacity];
-        for(int i = 0;i<(messages_capacity/2); i++){
-            new_messages[i] = messages[i];
-        }
-        delete[] messages;
-        messages = new_messages;
-    };
-
 }
 
 void Diary::write(std::string message)
@@ -117,14 +92,15 @@ void Diary::write(std::string message)
 
     file_out.close();
 }
-Message* Diary::search(std::string what){
-    std::size_t found;
-    for (int i = 0; i < messages_size; ++i)
+std::vector<Message*> Diary::search(std::string what){
+     std::size_t found;
+     std::vector< Message* > m_search;
+    for (auto it = messages.begin(); it < messages.end(); ++it)
     {
-        found = messages[i].content.find(what);
+        found = (*it).content.find(what);
         if (found!=std::string::npos){
-            return &messages[i];
+            m_search.push_back(&(*it));
         }
     }
-    return nullptr;
+    return m_search;
 }

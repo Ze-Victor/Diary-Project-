@@ -9,21 +9,21 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 #include <cstring>
 
 struct Diary
 {
     Diary(const std::string& filename);
-    ~Diary();
 
     std::string filename;
-    Message* messages;
+    std::vector <Message> messages;
     size_t messages_size;
     size_t messages_capacity;
 
     void add(const std::string& message);
     void write(std::string message);
-    Message* search(std::string what);
+    std::vector<Message*> search(std::string what);
 };
 
 #endif
