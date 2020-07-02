@@ -66,8 +66,12 @@ void App::search_messege(std::string message){
 
     std::vector<Message*> what = diary.search(message);
 
-    for (auto i : what)
-    {
-        std::cout << i->content << std::endl;
+    if(what.empty()){
+        std::cout << "Não existe mensages com a palavra '" << message << "' no diário." << std::endl;
+    }else{
+        for (auto i : what)
+        {
+            std::cout << " -> " <<  i->content << std::endl;
+        }
     }
 }
