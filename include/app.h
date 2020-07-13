@@ -14,8 +14,10 @@ struct App
     int show_usage();
     void add();
     void add(const std::string message);
-    void list_messages();
+    void list_messages(std::string format);
+    void search();
     void search_messege(std::string message);
+    void diary_interactive();
 };
 
 #endif
